@@ -1,12 +1,14 @@
 package flashcards.vocab.com.germanvocab.parser;
 
-import android.renderscript.Element;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import android.util.Log;
 
 import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+
+import hugo.weaving.DebugLog;
 
 /**
  * Created by ajit on 20.11.14.
@@ -14,35 +16,48 @@ import java.util.ArrayList;
 public class ParsePageForWords {
 
 
-    Document doc;
-    WordModelForLetter wordsListForLetter;
-
-    ParsePageForWords(Document doc,String letter){
-        this.doc=doc;
-        wordsListForLetter=new WordModelForLetter();
-        wordsListForLetter.setLetter(letter);
-
-    }
+    @DebugLog
+    public   static  ArrayList<FlashCard> getWordsList(Document doc,String letter){
 
 
-    public  String getWordsList(){
-
-        ArrayList<flashCard> flashCards=new ArrayList<flashCard>();
+        ArrayList<FlashCard> flashCards=new ArrayList<FlashCard>();
         int id=1;
-         String temp="";
-        for (flashCard card:flashCards){
 
-          card.setWordId(id++);
+        Elements allPara=doc.getElementsByTag("p");
+        Element mainPara=allPara.first();
 
-           Elements germanWord=doc.getElementsByTag("TABLE");
-            Log.d("word",germanWord.toString());
+        Element mainTable=mainPara.child(3);
 
-            temp+=" "+id;
+        Elements tableRows=mainTable.getElementsByTag("tr");
 
+        for (Element row:tableRows){
+
+            Elements tableData=row.children();
+
+            for (Element word:tableData){
+
+                Elements wordBlock=word.getElementsByTag("b");
+
+                Element imageAndEnglish=wordBlock.first();
+                String imageTag =imageAndEnglish.attr("src");
+
+
+            }
         }
 
 
-       return temp+" ajit";
+        Log.d("wordTest","===============================================================================");
+
+        for (FlashCard card:flashCards){
+
+          card.setWordId(id++);
+
+
+
+      }
+
+
+       return flashCards;
 
 
 

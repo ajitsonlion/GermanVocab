@@ -5,35 +5,10 @@ import java.util.ArrayList;
 /**
  * Created by ajit on 19.11.14.
  */
-public class WordModelForLetter {
-
-    private String letter;
-    private ArrayList<flashCard> flashCardCollectionForLetter= new ArrayList<flashCard>();
-
-
-    public ArrayList<flashCard> getFlashCardCollectionForLetter() {
-        return flashCardCollectionForLetter;
-    }
-
-    public void setFlashCardCollectionForLetter(ArrayList<flashCard> flashCardCollectionForLetter) {
-        this.flashCardCollectionForLetter = flashCardCollectionForLetter;
-    }
-
-    public String getLetter() {
-        return letter;
-    }
-
-    public void setLetter(String letter) {
-        this.letter = letter;
-    }
 
 
 
-}
-
-
-
-class flashCard{
+public class FlashCard{
 
     private int wordId;
     private String germanWord;

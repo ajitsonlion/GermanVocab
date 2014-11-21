@@ -9,6 +9,9 @@ import org.jsoup.nodes.Document;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+
+import hugo.weaving.DebugLog;
 
 import static org.jsoup.Jsoup.connect;
 
@@ -22,13 +25,13 @@ public class URLConnection {
     private   String webPage="/languages/german/";
     private  String URLTail="isfor.shtml";
 
-
-    public  String getAllWordsListByLetter()  {
-
-
-        String wholeWord="";
+    @DebugLog
+    public  Map<String, ArrayList<FlashCard>> getAllWordsListByLetter()  {
 
 
+
+
+             Map<String, ArrayList<FlashCard>> letterAndItsWordsCollection = new HashMap<String, ArrayList<FlashCard>>();
 
             ArrayList<Pair<String,String>> allURLsByLetter=getAllURLByLetter();
 
@@ -38,22 +41,24 @@ public class URLConnection {
 
 
                 try {
-                Document doc = Jsoup.connect(letterURL.second.toString()).get();
-                ParsePageForWords wordPage=new ParsePageForWords(doc,letterURL.first.toString());
-                wholeWord+= wordPage.getWordsList();
 
-            }catch (Exception e) {
+                Document doc = Jsoup.connect(letterURL.second.toString()).get();
+
+                    ArrayList<FlashCard> letterWords= ParsePageForWords.getWordsList(doc,letterURL.first.toString());
+                  letterAndItsWordsCollection.put(letterURL.first.toString(),letterWords);
+
+             }catch (Exception e) {
 
                     e.printStackTrace();
                 }
 
 
         }
-        return wholeWord+"Ajit";
+        return letterAndItsWordsCollection;
 
     }
 
-
+    @DebugLog
     public  ArrayList<Pair<String,String>> getAllURLByLetter(){
 
         ArrayList<Pair<String,String>> listOfAllURLByLetter= new ArrayList<Pair<String,String>>();

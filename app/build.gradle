@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'hugo'
 
 android {
     compileSdkVersion 20
@@ -18,6 +19,20 @@ android {
         }
     }
 }
+
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        // The following adds the ability to use @DebugLog on methods
+        classpath 'com.jakewharton.hugo:hugo-plugin:1.1.0'
+    }
+}
+
+
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])

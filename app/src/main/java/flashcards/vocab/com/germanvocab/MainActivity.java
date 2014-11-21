@@ -9,15 +9,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 import flashcards.vocab.com.germanvocab.parser.URLConnection;
+import flashcards.vocab.com.germanvocab.parser.FlashCard;
+import hugo.weaving.DebugLog;
 
 
 public class MainActivity extends Activity {
     String title;
     ProgressDialog mProgressDialog;
-
+    Map<String, ArrayList<FlashCard>> wordsDatabase;
     TextView demo;
     @Override
+    @DebugLog
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -62,6 +68,7 @@ public class MainActivity extends Activity {
         String demoToShow="";
 
         @Override
+        @DebugLog
         protected void onPreExecute() {
             super.onPreExecute();
             mProgressDialog = new ProgressDialog(MainActivity.this);
@@ -74,11 +81,12 @@ public class MainActivity extends Activity {
         }
 
         @Override
+        @DebugLog
         protected Void doInBackground(Void... params) {
             try {
                 // Connect to the web site
                 URLConnection connector=new URLConnection();
-                demoToShow= connector.getAllWordsListByLetter();
+                wordsDatabase= connector.getAllWordsListByLetter();
                 // Get the html document title
                 Log.d("data","working");
             } catch (Exception e) {
@@ -88,6 +96,7 @@ public class MainActivity extends Activity {
         }
 
         @Override
+        @DebugLog
         protected void onPostExecute(Void result) {
             // Set title into TextView
 
