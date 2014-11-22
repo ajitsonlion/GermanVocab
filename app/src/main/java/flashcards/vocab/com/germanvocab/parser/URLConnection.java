@@ -35,7 +35,7 @@ public class URLConnection {
 
             ArrayList<Pair<String,String>> allURLsByLetter=getAllURLByLetter();
 
-            Log.d("URL of Letter", "b");
+
 
             for(Pair letterURL:allURLsByLetter){
 
@@ -44,7 +44,7 @@ public class URLConnection {
 
                 Document doc = Jsoup.connect(letterURL.second.toString()).get();
 
-                    ArrayList<FlashCard> letterWords= ParsePageForWords.getWordsList(doc,letterURL.first.toString());
+                  ArrayList<FlashCard> letterWords= ParsePageForWords.getWordsList(doc);
                   letterAndItsWordsCollection.put(letterURL.first.toString(),letterWords);
 
              }catch (Exception e) {

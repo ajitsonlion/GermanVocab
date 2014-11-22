@@ -16,17 +16,32 @@ import hugo.weaving.DebugLog;
 public class ParsePageForWords {
 
 
-    @DebugLog
-    public   static  ArrayList<FlashCard> getWordsList(Document doc,String letter){
+
+    public   static  ArrayList<FlashCard> getWordsList(Document doc){
 
 
         ArrayList<FlashCard> flashCards=new ArrayList<FlashCard>();
         int id=1;
 
         Elements allPara=doc.getElementsByTag("p");
-        Element mainPara=allPara.first();
 
-        Element mainTable=mainPara.child(3);
+        Log.d("tag",allPara.size()+"");
+
+        Element mainPara=allPara.get(0);
+
+
+        Log.d("tag","===============================================================================");
+        Log.d("tagChild",mainPara.tagName());
+
+        Log.d("tagChild",mainPara.children().size()+"");
+        Log.d("tag","===============================================================================");
+
+
+
+        Element mainTable=mainPara.child(0);
+
+        Log.d("tagTable",mainTable.tagName());
+        Log.d("tag","===============================================================================");
 
         Elements tableRows=mainTable.getElementsByTag("tr");
 
@@ -40,6 +55,7 @@ public class ParsePageForWords {
 
                 Element imageAndEnglish=wordBlock.first();
                 String imageTag =imageAndEnglish.attr("src");
+
 
 
             }
