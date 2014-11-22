@@ -7,6 +7,8 @@ import android.util.Log;
 import org.jsoup.nodes.Document;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 
 import hugo.weaving.DebugLog;
 
@@ -17,61 +19,77 @@ public class ParsePageForWords {
 
 
 
-    public   static  ArrayList<FlashCard> getWordsList(Document doc){
+        public   static  ArrayList<FlashCard> getWordsList(Document doc){
 
 
         ArrayList<FlashCard> flashCards=new ArrayList<FlashCard>();
         int id=1;
 
-        Elements allPara=doc.getElementsByTag("p");
+        Elements allPara=doc.getElementsByTag("table");
 
         Log.d("tag",allPara.size()+"");
 
-        Element mainPara=allPara.get(0);
+        Element mainPara=allPara.get(6);
 
 
         Log.d("tag","===============================================================================");
         Log.d("tagChild",mainPara.tagName());
 
+
+
         Log.d("tagChild",mainPara.children().size()+"");
         Log.d("tag","===============================================================================");
 
 
+        Elements tableRows=mainPara.getElementsByTag("td");
 
-        Element mainTable=mainPara.child(0);
+        for (Element data:tableRows){
 
-        Log.d("tagTable",mainTable.tagName());
-        Log.d("tag","===============================================================================");
-
-        Elements tableRows=mainTable.getElementsByTag("tr");
-
-        for (Element row:tableRows){
-
-            Elements tableData=row.children();
-
-            for (Element word:tableData){
-
-                Elements wordBlock=word.getElementsByTag("b");
-
-                Element imageAndEnglish=wordBlock.first();
-                String imageTag =imageAndEnglish.attr("src");
+            Elements tableData=data.children();
 
 
+
+
+
+            for (Element currentNode : tableData) {
+
+                 FlashCard card=new FlashCard();
+
+                 card.setWordId(id++);
+
+
+                String englishWord=currentNode.getElementsByTag("b").first().text();
+
+                card.setEnglishWord(englishWord);
+
+                String[] germanWord=currentNode.getElementsByTag("b").last().text().split(" ",2);
+
+                boolean ifArticleExists=germanWord[0].equalsIgnoreCase("der") ||germanWord[0].equalsIgnoreCase("die") ||germanWord[0].equalsIgnoreCase("das");
+
+                if(ifArticleExists)
+                {
+                    card.setArticle(germanWord[0]);
+                    card.setGermanWord(germanWord[1]);
+
+
+                }else{
+                    card.setArticle("");
+
+                    card.setGermanWord(Arrays.toString(germanWord));
+
+
+                }
+
+
+                String imageURL=currentNode.getElementsByTag("img").first().attr("src");
+                card.setWordImage(imageURL);
+
+                flashCards.add(card);
 
             }
+
+
         }
-
-
-        Log.d("wordTest","===============================================================================");
-
-        for (FlashCard card:flashCards){
-
-          card.setWordId(id++);
-
-
-
-      }
-
 
        return flashCards;
 

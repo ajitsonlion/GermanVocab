@@ -6,14 +6,11 @@ import android.util.Pair;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import hugo.weaving.DebugLog;
-
-import static org.jsoup.Jsoup.connect;
 
 /**
  * Created by ajit on 19.11.14.
@@ -21,7 +18,7 @@ import static org.jsoup.Jsoup.connect;
 public class URLConnection {
 
 
-    private String domainName="http://www.littleexplorers.com/";
+    public static String domainName="http://www.littleexplorers.com";
     private   String webPage="/languages/german/";
     private  String URLTail="isfor.shtml";
 
@@ -30,22 +27,21 @@ public class URLConnection {
 
 
 
-
-             Map<String, ArrayList<FlashCard>> letterAndItsWordsCollection = new HashMap<String, ArrayList<FlashCard>>();
+            Map<String, ArrayList<FlashCard>> letterAndItsWordsCollection = new HashMap<String, ArrayList<FlashCard>>();
 
             ArrayList<Pair<String,String>> allURLsByLetter=getAllURLByLetter();
 
 
 
-            for(Pair letterURL:allURLsByLetter){
+            for(Pair<String, String> letterURL:allURLsByLetter){
 
 
                 try {
 
-                Document doc = Jsoup.connect(letterURL.second.toString()).get();
+                Document doc = Jsoup.connect(letterURL.second).get();
 
                   ArrayList<FlashCard> letterWords= ParsePageForWords.getWordsList(doc);
-                  letterAndItsWordsCollection.put(letterURL.first.toString(),letterWords);
+                  letterAndItsWordsCollection.put(letterURL.first,letterWords);
 
              }catch (Exception e) {
 
@@ -69,7 +65,7 @@ public class URLConnection {
             String letterURL = domainName + webPage + anAlphabet + URLTail;
             Log.d("URL of Letter",letterURL);
 
-            Pair letterAndUrl=Pair.create( Character.toString(anAlphabet), letterURL);
+            Pair<String, String> letterAndUrl=Pair.create(Character.toString(anAlphabet), letterURL);
             listOfAllURLByLetter.add(letterAndUrl);
         }
 

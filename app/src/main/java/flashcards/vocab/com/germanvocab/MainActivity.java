@@ -10,15 +10,24 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 
+import flashcards.vocab.com.germanvocab.cardUI.CardAdapter;
 import flashcards.vocab.com.germanvocab.parser.URLConnection;
 import flashcards.vocab.com.germanvocab.parser.FlashCard;
 import hugo.weaving.DebugLog;
+import it.gmariotti.cardslib.library.internal.Card;
+import it.gmariotti.cardslib.library.internal.CardArrayAdapter;
+import it.gmariotti.cardslib.library.view.CardListView;
 
 
 public class MainActivity extends Activity {
-    String title;
+
+    ArrayList<Card> dictionary;
+    CardArrayAdapter mCardArrayAdapter;
+    CardListView listView;
     ProgressDialog mProgressDialog;
     Map<String, ArrayList<FlashCard>> wordsDatabase;
     TextView demo;
@@ -30,9 +39,9 @@ public class MainActivity extends Activity {
         Log.d("data","started");
         new GetWordsInBackground().execute();
 
-        demo=(TextView)findViewById(R.id.demo);
 
-        Log.v("data","started");
+        listView = (CardListView) findViewById(R.id.myList);
+
 
 
     }
@@ -72,6 +81,7 @@ public class MainActivity extends Activity {
         protected void onPreExecute() {
             super.onPreExecute();
             mProgressDialog = new ProgressDialog(MainActivity.this);
+            mProgressDialog.setCancelable(false);
             mProgressDialog.setTitle("Android Basic JSoup Tutorial");
             mProgressDialog.setMessage("Loading...");
             mProgressDialog.setIndeterminate(false);
@@ -87,6 +97,8 @@ public class MainActivity extends Activity {
                 // Connect to the web site
                 URLConnection connector=new URLConnection();
                 wordsDatabase= connector.getAllWordsListByLetter();
+
+
                 // Get the html document title
                 Log.d("data","working");
             } catch (Exception e) {
@@ -100,10 +112,20 @@ public class MainActivity extends Activity {
         protected void onPostExecute(Void result) {
             // Set title into TextView
 
-            Log.d("data","finish");
+            dictionary= CardAdapter.getUICardsFromFlashCards(getApplicationContext(),wordsDatabase);
+
+
+
+
+            mCardArrayAdapter = new CardArrayAdapter(getApplicationContext(),dictionary);
+
+
+            if (listView!=null){
+                listView.setAdapter(mCardArrayAdapter);
+            }
 
             mProgressDialog.dismiss();
-            demo.setText(demoToShow);
+
         }
     }
 }
