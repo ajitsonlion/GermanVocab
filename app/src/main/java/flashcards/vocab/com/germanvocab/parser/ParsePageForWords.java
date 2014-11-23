@@ -4,6 +4,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import android.util.Log;
 
+import com.orm.SugarRecord;
+
 import org.jsoup.nodes.Document;
 
 import java.util.ArrayList;
@@ -15,11 +17,11 @@ import hugo.weaving.DebugLog;
 /**
  * Created by ajit on 20.11.14.
  */
-public class ParsePageForWords {
+public class ParsePageForWords     {
 
 
 
-        public   static  ArrayList<FlashCard> getWordsList(Document doc){
+        public   static  ArrayList<FlashCard> getWordsList(Document doc,String letter){
 
 
         ArrayList<FlashCard> flashCards=new ArrayList<FlashCard>();
@@ -56,6 +58,7 @@ public class ParsePageForWords {
                  FlashCard card=new FlashCard();
 
                  card.setWordId(id++);
+                 card.setLetter(letter);
 
 
                 String englishWord=currentNode.getElementsByTag("b").first().text();
@@ -82,9 +85,11 @@ public class ParsePageForWords {
 
 
                 String imageURL=currentNode.getElementsByTag("img").first().attr("src");
-                card.setWordImage(imageURL);
+                card.setWordImage(URLConnection.DOMAIN_NAME+imageURL);
 
                 flashCards.add(card);
+                card.save();
+
 
             }
 

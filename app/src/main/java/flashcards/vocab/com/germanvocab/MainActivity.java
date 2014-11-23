@@ -4,14 +4,23 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import flashcards.vocab.com.germanvocab.cardUI.CardAdapter;
@@ -29,19 +38,19 @@ public class MainActivity extends Activity {
     CardArrayAdapter mCardArrayAdapter;
     CardListView listView;
     ProgressDialog mProgressDialog;
-    Map<String, ArrayList<FlashCard>> wordsDatabase;
+    ArrayList<FlashCard> wordsDatabase;
     TextView demo;
+
     @Override
     @DebugLog
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d("data","started");
+        Log.d("data", "started");
         new GetWordsInBackground().execute();
 
 
         listView = (CardListView) findViewById(R.id.myList);
-
 
 
     }
@@ -70,11 +79,10 @@ public class MainActivity extends Activity {
     }
 
 
-
     // Title AsyncTask
     class GetWordsInBackground extends AsyncTask<Void, Void, Void> {
 
-        String demoToShow="";
+        String demoToShow = "";
 
         @Override
         @DebugLog
@@ -86,7 +94,7 @@ public class MainActivity extends Activity {
             mProgressDialog.setMessage("Loading...");
             mProgressDialog.setIndeterminate(false);
             mProgressDialog.show();
-            Log.d("data","started");
+            Log.d("data", "started");
 
         }
 
@@ -95,12 +103,24 @@ public class MainActivity extends Activity {
         protected Void doInBackground(Void... params) {
             try {
                 // Connect to the web site
-                URLConnection connector=new URLConnection();
-                wordsDatabase= connector.getAllWordsListByLetter();
+
+                List<FlashCard> books = FlashCard.listAll(FlashCard.class);
 
 
-                // Get the html document title
-                Log.d("data","working");
+
+                if(books.size()<1){
+
+                    Log.d("source", "Database");
+                    wordsDatabase=(ArrayList<FlashCard>)books;
+
+                }
+                else {
+                    Log.d("source", "Online");
+                    URLConnection connector = new URLConnection();
+                    wordsDatabase = connector.getAllWordsListByLetter();
+                }
+
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -112,19 +132,22 @@ public class MainActivity extends Activity {
         protected void onPostExecute(Void result) {
             // Set title into TextView
 
-            dictionary= CardAdapter.getUICardsFromFlashCards(getApplicationContext(),wordsDatabase);
+            dictionary = CardAdapter.getUICardsFromFlashCards(getApplicationContext(), wordsDatabase);
+
+
+            mCardArrayAdapter = new CardArrayAdapter(getApplicationContext(), dictionary);
+
+
+             Gson gson = new Gson();
 
 
 
+                if (listView != null) {
+                    listView.setAdapter(mCardArrayAdapter);
+                }
 
-            mCardArrayAdapter = new CardArrayAdapter(getApplicationContext(),dictionary);
+                mProgressDialog.dismiss();
 
-
-            if (listView!=null){
-                listView.setAdapter(mCardArrayAdapter);
-            }
-
-            mProgressDialog.dismiss();
 
         }
     }

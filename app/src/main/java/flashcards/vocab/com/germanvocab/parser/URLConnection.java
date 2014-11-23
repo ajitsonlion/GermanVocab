@@ -18,16 +18,16 @@ import hugo.weaving.DebugLog;
 public class URLConnection {
 
 
-    public static String domainName="http://www.littleexplorers.com";
-    private   String webPage="/languages/german/";
-    private  String URLTail="isfor.shtml";
+    public static final  String DOMAIN_NAME ="http://www.littleexplorers.com";
+    private   final String webPage="/languages/german/";
+    private  final String URLTail="isfor.shtml";
 
     @DebugLog
-    public  Map<String, ArrayList<FlashCard>> getAllWordsListByLetter()  {
+    public    ArrayList<FlashCard>  getAllWordsListByLetter()  {
 
 
 
-            Map<String, ArrayList<FlashCard>> letterAndItsWordsCollection = new HashMap<String, ArrayList<FlashCard>>();
+        ArrayList<FlashCard> letterAndItsWordsCollection = new  ArrayList<FlashCard>();
 
             ArrayList<Pair<String,String>> allURLsByLetter=getAllURLByLetter();
 
@@ -40,8 +40,8 @@ public class URLConnection {
 
                 Document doc = Jsoup.connect(letterURL.second).get();
 
-                  ArrayList<FlashCard> letterWords= ParsePageForWords.getWordsList(doc);
-                  letterAndItsWordsCollection.put(letterURL.first,letterWords);
+                  ArrayList<FlashCard> letterWords= ParsePageForWords.getWordsList(doc,letterURL.first);
+                  letterAndItsWordsCollection.addAll(letterWords);
 
              }catch (Exception e) {
 
@@ -62,7 +62,7 @@ public class URLConnection {
 
         for (char anAlphabet : alphabet) {
 
-            String letterURL = domainName + webPage + anAlphabet + URLTail;
+            String letterURL = DOMAIN_NAME + webPage + anAlphabet + URLTail;
             Log.d("URL of Letter",letterURL);
 
             Pair<String, String> letterAndUrl=Pair.create(Character.toString(anAlphabet), letterURL);

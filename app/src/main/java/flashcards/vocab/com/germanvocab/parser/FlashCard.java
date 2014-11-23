@@ -1,5 +1,7 @@
 package flashcards.vocab.com.germanvocab.parser;
 
+import com.orm.SugarRecord;
+
 import java.util.ArrayList;
 
 /**
@@ -8,13 +10,14 @@ import java.util.ArrayList;
 
 
 
-public class FlashCard{
+public class FlashCard extends SugarRecord<FlashCard> {
 
     private int wordId;
     private String germanWord;
     private String englishWord;
     private String wordImage;
     private String article;
+    private String letter;
 
     public int getWordId() {
         return wordId;
@@ -54,6 +57,13 @@ public class FlashCard{
 
     public void setArticle(String article) {
         this.article = article;
+    }
+    public String getLetter() {
+        return letter;
+    }
+
+    public void setLetter(String letter) {
+        this.letter = letter;
     }
 
 

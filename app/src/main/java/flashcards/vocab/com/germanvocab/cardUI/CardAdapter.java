@@ -1,6 +1,7 @@
 package flashcards.vocab.com.germanvocab.cardUI;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,23 +22,22 @@ public class CardAdapter {
 
 
 
-    public  static ArrayList<Card> getUICardsFromFlashCards(Context context,Map<String, ArrayList<FlashCard>> dictionary){
+    public  static ArrayList<Card> getUICardsFromFlashCards(Context context, ArrayList<FlashCard> dictionary){
 
-        List<Map.Entry<String,ArrayList<FlashCard>>> list = new ArrayList<Map.Entry<String,ArrayList<FlashCard>>>(dictionary.entrySet());
+
 
 
         ArrayList<Card> cardsUI = new ArrayList<Card>();
 
-        for (Map.Entry<String, ArrayList<FlashCard>> entry : list) {
+        for (FlashCard flashCard : dictionary) {
            // String key = entry.getKey();
-            ArrayList<FlashCard> wordsForLetter = entry.getValue();
 
-
-            for (FlashCard flashCard:wordsForLetter){
 
                 Card card=new Card(context);
                 CardHeader header=new CardHeader(context);
+
                 header.setTitle(flashCard.getGermanWord());
+
                 card.setTitle(flashCard.getGermanWord());
               //  card.addCardHeader(header);
                 //Create thumbnail
@@ -50,13 +50,12 @@ public class CardAdapter {
 
                 //Add thumbnail to a card
                 card.addCardThumbnail(thumb);
-
+                Log.d("data", flashCard.getWordImage());
                 cardsUI.add(card);
 
 
             }
 
-        }
 
         Collections.shuffle(cardsUI);
 
