@@ -8,15 +8,21 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -24,22 +30,25 @@ import java.util.List;
 import java.util.Map;
 
 import flashcards.vocab.com.germanvocab.cardUI.CardAdapter;
-import flashcards.vocab.com.germanvocab.parser.URLConnection;
 import flashcards.vocab.com.germanvocab.parser.FlashCard;
 import hugo.weaving.DebugLog;
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardArrayAdapter;
 import it.gmariotti.cardslib.library.view.CardListView;
+import se.emilsjolander.flipview.FlipView;
 
 
 public class MainActivity extends Activity {
 
+
+    FlipView flipView;
     ArrayList<Card> dictionary;
-    CardArrayAdapter mCardArrayAdapter;
-    CardListView listView;
     ProgressDialog mProgressDialog;
     ArrayList<FlashCard> wordsDatabase;
-    TextView demo;
+    public static final  String DOMAIN_NAME ="http://ajitsonlion.comule.com/germanvocab/";
+
+    public static final  String DICTIONARY_URL ="http://ajitsonlion.comule.com/germanvocab/dictionary.json";
+
 
     @Override
     @DebugLog
@@ -50,7 +59,8 @@ public class MainActivity extends Activity {
         new GetWordsInBackground().execute();
 
 
-        listView = (CardListView) findViewById(R.id.myList);
+       flipView = (FlipView) findViewById(R.id.flip_view);
+
 
 
     }
@@ -82,7 +92,6 @@ public class MainActivity extends Activity {
     // Title AsyncTask
     class GetWordsInBackground extends AsyncTask<Void, Void, Void> {
 
-        String demoToShow = "";
 
         @Override
         @DebugLog
@@ -104,21 +113,9 @@ public class MainActivity extends Activity {
             try {
                 // Connect to the web site
 
-                List<FlashCard> books = FlashCard.listAll(FlashCard.class);
-
-
-
-                if(books.size()<1){
-
-                    Log.d("source", "Database");
-                    wordsDatabase=(ArrayList<FlashCard>)books;
-
-                }
-                else {
-                    Log.d("source", "Online");
-                    URLConnection connector = new URLConnection();
-                    wordsDatabase = connector.getAllWordsListByLetter();
-                }
+                Reader reader = new InputStreamReader(new URL(DICTIONARY_URL).openStream()); //Read the json output
+                Gson gson = new GsonBuilder().create();
+                wordsDatabase = gson.fromJson(reader,new TypeToken<ArrayList<FlashCard>>() {}.getType());
 
 
             } catch (Exception e) {
@@ -132,19 +129,12 @@ public class MainActivity extends Activity {
         protected void onPostExecute(Void result) {
             // Set title into TextView
 
-            dictionary = CardAdapter.getUICardsFromFlashCards(getApplicationContext(), wordsDatabase);
+           // dictionary = CardAdapter.getUICardsFromFlashCards(getApplicationContext(), wordsDatabase);
 
+            CardAdapter dictionary=new CardAdapter(getApplicationContext(),wordsDatabase);
 
-            mCardArrayAdapter = new CardArrayAdapter(getApplicationContext(), dictionary);
+              flipView.setAdapter(dictionary);
 
-
-             Gson gson = new Gson();
-
-
-
-                if (listView != null) {
-                    listView.setAdapter(mCardArrayAdapter);
-                }
 
                 mProgressDialog.dismiss();
 
