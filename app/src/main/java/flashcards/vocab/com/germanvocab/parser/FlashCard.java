@@ -115,10 +115,4 @@ class WordToSentence{
 
     String englishSentence="";
 
-
-
-
-
-
-
 }
