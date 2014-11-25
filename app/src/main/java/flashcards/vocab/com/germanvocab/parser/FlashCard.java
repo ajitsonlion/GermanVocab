@@ -1,6 +1,5 @@
 package flashcards.vocab.com.germanvocab.parser;
 
-import com.orm.SugarRecord;
 
 import java.util.ArrayList;
 
@@ -10,7 +9,7 @@ import java.util.ArrayList;
 
 
 
-public class FlashCard extends SugarRecord<FlashCard> {
+public class FlashCard  {
 
     private int wordId;
     private String germanWord;
@@ -18,6 +17,29 @@ public class FlashCard extends SugarRecord<FlashCard> {
     private String wordImage;
     private String article;
     private String letter;
+
+    public ArrayList<String> getImagesForWord() {
+        return imagesForWord;
+    }
+
+    public void setImagesForWord(ArrayList<String> imagesForWord) {
+        this.imagesForWord = imagesForWord;
+    }
+
+    private ArrayList<String> imagesForWord=new ArrayList<String>();
+
+    private ArrayList<WordToSentence> exampleSentence=new ArrayList<WordToSentence>();
+
+
+    public ArrayList<WordToSentence> getExampleSentence() {
+        return exampleSentence;
+    }
+
+    public void setExampleSentence(ArrayList<WordToSentence> exampleSentence) {
+        this.exampleSentence = exampleSentence;
+    }
+
+
 
     public int getWordId() {
         return wordId;
@@ -65,6 +87,37 @@ public class FlashCard extends SugarRecord<FlashCard> {
     public void setLetter(String letter) {
         this.letter = letter;
     }
+
+
+
+}
+
+
+class WordToSentence{
+
+    String germanSentence="";
+
+    public String getEnglishSentence() {
+        return englishSentence;
+    }
+
+    public void setEnglishSentence(String englishSentence) {
+        this.englishSentence = englishSentence;
+    }
+
+    public String getGermanSentence() {
+        return germanSentence;
+    }
+
+    public void setGermanSentence(String germanSentence) {
+        this.germanSentence = germanSentence;
+    }
+
+    String englishSentence="";
+
+
+
+
 
 
 
