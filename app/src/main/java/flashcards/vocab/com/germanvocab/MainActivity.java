@@ -145,7 +145,7 @@ public class MainActivity extends Activity {
 
            // dictionary = CardAdapter.getUICardsFromFlashCards(getApplicationContext(), wordsDatabase);
 
-            CardAdapter dictionary=new CardAdapter(getApplicationContext(),wordsDatabase);
+            CardAdapter dictionary=new CardAdapter(MainActivity.this,wordsDatabase);
 
               flipView.setAdapter(dictionary);
 
