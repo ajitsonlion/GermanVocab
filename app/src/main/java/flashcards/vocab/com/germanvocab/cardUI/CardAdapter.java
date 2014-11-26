@@ -27,6 +27,7 @@ public class CardAdapter extends ArrayAdapter<FlashCard> {
     private final Context context;
     private  ArrayList<FlashCard> dictionary;
 
+    private static View  container;
 
 
     public CardAdapter(Context context, ArrayList<FlashCard> dictionary) {
@@ -43,25 +44,39 @@ public class CardAdapter extends ArrayAdapter<FlashCard> {
     }
 
 
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.cardslayout, parent, false);
-        TextView textView = (TextView) rowView.findViewById(R.id.label);
-        ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
+
+        container=rowView;
+
+        TextView germanWord = (TextView) rowView.findViewById(R.id.germanWord);
+        TextView englishWord = (TextView) rowView.findViewById(R.id.englishWord);
 
 
         FlashCard flashCard=dictionary.get(position);
 
-        textView.setText(flashCard.getGermanWord());
-        Picasso.with(context)
-                .load(MainActivity.DOMAIN_NAME+flashCard.getWordImage())
-                .into(imageView); //populate the list items with country flag of corresponding countries
+        germanWord.setText(flashCard.getGermanWord());
+        englishWord.setText(flashCard.getEnglishWord());
 
 
         return rowView;
     }
 
+    public  static void flipCard()
+    {
+        View cardFace =  container.findViewById(R.id.main_activity_card_face);
+        View cardBack =   container.findViewById(R.id.main_activity_card_back);
+
+        FlipAnimation flipAnimation = new FlipAnimation(cardFace, cardBack);
+
+        if (cardFace.getVisibility() == View.GONE)
+        {
+            flipAnimation.reverse();
+        }
+        container.startAnimation(flipAnimation);
+    }
 
 }

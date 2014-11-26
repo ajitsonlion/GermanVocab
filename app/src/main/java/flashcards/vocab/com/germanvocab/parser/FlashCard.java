@@ -28,15 +28,15 @@ public class FlashCard  {
 
     private ArrayList<String> imagesForWord=new ArrayList<String>();
 
-    private ArrayList<WordToSentence> exampleSentence=new ArrayList<WordToSentence>();
+    private ArrayList<WordToSentence> exampleWord=new ArrayList<WordToSentence>();
 
 
-    public ArrayList<WordToSentence> getExampleSentence() {
-        return exampleSentence;
+    public ArrayList<WordToSentence> getExampleWord() {
+        return exampleWord;
     }
 
-    public void setExampleSentence(ArrayList<WordToSentence> exampleSentence) {
-        this.exampleSentence = exampleSentence;
+    public void setExampleWord(ArrayList<WordToSentence> exampleWord) {
+        this.exampleWord = exampleWord;
     }
 
 
@@ -89,30 +89,29 @@ public class FlashCard  {
     }
 
 
-
 }
 
 
-class WordToSentence{
+class WordToSentence {
 
-    String germanSentence="";
+    String germanWord="";
 
-    public String getEnglishSentence() {
-        return englishSentence;
+    public String getEnglishWord() {
+        return englishWord;
     }
 
-    public void setEnglishSentence(String englishSentence) {
-        this.englishSentence = englishSentence;
+    public void setEnglishWord(String englishWord) {
+        this.englishWord = englishWord;
     }
 
-    public String getGermanSentence() {
-        return germanSentence;
+    public String getGermanWord() {
+        return germanWord;
     }
 
-    public void setGermanSentence(String germanSentence) {
-        this.germanSentence = germanSentence;
+    public void setGermanWord(String germanWord) {
+        this.germanWord = germanWord;
     }
 
-    String englishSentence="";
+    String englishWord="";
 
 }

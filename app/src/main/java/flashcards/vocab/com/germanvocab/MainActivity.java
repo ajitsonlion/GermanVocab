@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -15,11 +16,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
@@ -45,6 +49,7 @@ public class MainActivity extends Activity {
     ArrayList<Card> dictionary;
     ProgressDialog mProgressDialog;
     ArrayList<FlashCard> wordsDatabase;
+    CardAdapter cardAdapter;
     public static final  String DOMAIN_NAME ="http://ajitsonlion.comule.com/germanvocab/";
 
     public static final  String DICTIONARY_URL ="http://ajitsonlion.comule.com/germanvocab/dictionary.json";
@@ -88,6 +93,13 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void onCardClick(View view)
+    {
+
+        CardAdapter.flipCard();
+    }
+
+
 
     // Title AsyncTask
     class GetWordsInBackground extends AsyncTask<Void, Void, Void> {
@@ -113,8 +125,10 @@ public class MainActivity extends Activity {
             try {
                 // Connect to the web site
 
-                Reader reader = new InputStreamReader(new URL(DICTIONARY_URL).openStream()); //Read the json output
+                Reader reader = new InputStreamReader(getAssets().open("dictionary.json")); //Read the json output
+
                 Gson gson = new GsonBuilder().create();
+
                 wordsDatabase = gson.fromJson(reader,new TypeToken<ArrayList<FlashCard>>() {}.getType());
 
 
