@@ -30,7 +30,7 @@ public class CardAdapter extends ArrayAdapter<FlashCard> {
     private static View  container;
 
 
-    public CardAdapter(Context context, ArrayList<FlashCard> dictionary) {
+    public CardAdapter(Activity context, ArrayList<FlashCard> dictionary) {
         super(context, R.layout.cardslayout);
         this.context = context;
         this.dictionary = dictionary;
