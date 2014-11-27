@@ -48,9 +48,25 @@ public class CardAdapter extends ArrayAdapter<FlashCard> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.cardslayout, parent, false);
+        final View rowView = inflater.inflate(R.layout.cardslayout, parent, false);
 
-        container=rowView;
+        final View cardFace =  rowView.findViewById(R.id.main_activity_card_face);
+        final View cardBack =   rowView.findViewById(R.id.main_activity_card_back);
+
+        cardBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flipCard(rowView,cardFace,cardBack);
+            }
+        });
+
+        cardFace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flipCard(rowView, cardFace,cardBack);
+            }
+        });
+
 
         TextView germanWord = (TextView) rowView.findViewById(R.id.germanWord);
         TextView englishWord = (TextView) rowView.findViewById(R.id.englishWord);
@@ -65,10 +81,9 @@ public class CardAdapter extends ArrayAdapter<FlashCard> {
         return rowView;
     }
 
-    public  static void flipCard()
+    public    void flipCard(View view,View cardFace, View cardBack)
     {
-        View cardFace =  container.findViewById(R.id.main_activity_card_face);
-        View cardBack =   container.findViewById(R.id.main_activity_card_back);
+
 
         FlipAnimation flipAnimation = new FlipAnimation(cardFace, cardBack);
 
@@ -76,7 +91,7 @@ public class CardAdapter extends ArrayAdapter<FlashCard> {
         {
             flipAnimation.reverse();
         }
-        container.startAnimation(flipAnimation);
+        view.startAnimation(flipAnimation);
     }
 
 }

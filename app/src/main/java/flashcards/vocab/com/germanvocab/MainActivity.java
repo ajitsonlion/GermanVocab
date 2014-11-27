@@ -4,58 +4,34 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Toast;
+
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 
 import flashcards.vocab.com.germanvocab.cardUI.CardAdapter;
 import flashcards.vocab.com.germanvocab.parser.FlashCard;
 import hugo.weaving.DebugLog;
-import it.gmariotti.cardslib.library.internal.Card;
-import it.gmariotti.cardslib.library.internal.CardArrayAdapter;
-import it.gmariotti.cardslib.library.view.CardListView;
-import se.emilsjolander.flipview.FlipView;
-
 
 public class MainActivity extends Activity {
 
 
-    FlipView flipView;
-    ArrayList<Card> dictionary;
-    ProgressDialog mProgressDialog;
+    ListView flipView;
+     ProgressDialog mProgressDialog;
     ArrayList<FlashCard> wordsDatabase;
-    CardAdapter cardAdapter;
-    public static final  String DOMAIN_NAME ="http://ajitsonlion.comule.com/germanvocab/";
-
-    public static final  String DICTIONARY_URL ="http://ajitsonlion.comule.com/germanvocab/dictionary.json";
-
-
-    @Override
+     @Override
     @DebugLog
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,8 +40,17 @@ public class MainActivity extends Activity {
         new GetWordsInBackground().execute();
 
 
-       flipView = (FlipView) findViewById(R.id.flip_view);
+       flipView = (ListView) findViewById(R.id.flip_view);
 
+        flipView .setOnItemClickListener(new  AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+
+                Toast.makeText(getBaseContext(), position, Toast.LENGTH_LONG).show();
+
+            }
+        });
 
 
     }
@@ -93,11 +78,6 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onCardClick(View view)
-    {
-
-        CardAdapter.flipCard();
-    }
 
 
 
