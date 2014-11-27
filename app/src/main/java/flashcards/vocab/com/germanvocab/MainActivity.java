@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import flashcards.vocab.com.germanvocab.aphidmobile.flip.FlipViewController;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -16,24 +16,22 @@ import com.google.gson.reflect.TypeToken;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import flashcards.vocab.com.germanvocab.cardUI.CardAdapter;
+import flashcards.vocab.com.germanvocab.cardUI.SingleScrollListView;
 import flashcards.vocab.com.germanvocab.parser.FlashCard;
 import hugo.weaving.DebugLog;
-import it.gmariotti.cardslib.library.internal.Card;
 
 
-public class MainActivity extends Activity  {
+public class MainActivity extends Activity {
 
 
-    ArrayList<Card> dictionary;
     ProgressDialog mProgressDialog;
     ArrayList<FlashCard> wordsDatabase;
-    CardAdapter cardAdapter;
-    FlipViewController flipView;
-    public static final  String DOMAIN_NAME ="http://ajitsonlion.comule.com/germanvocab/";
+     SingleScrollListView flipView;
+    TextToSpeech textToSpeech;
 
-    public static final  String DICTIONARY_URL ="http://ajitsonlion.comule.com/germanvocab/dictionary.json";
 
 
     @Override
@@ -46,7 +44,9 @@ public class MainActivity extends Activity  {
 
 
 
-         flipView = new FlipViewController(this, FlipViewController.HORIZONTAL);
+         flipView = (SingleScrollListView)findViewById(R.id.flip_view);
+         flipView.setSingleScroll(true);
+
 
 
     }
@@ -74,6 +74,30 @@ public class MainActivity extends Activity  {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

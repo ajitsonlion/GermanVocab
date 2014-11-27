@@ -5,41 +5,67 @@
     android:layout_height="fill_parent"
     android:background="@android:color/transparent" >
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/main_activity_card_face"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-         android:clickable="true"
-        android:padding="5dp" >
+         android:orientation="vertical"
 
+        android:background="@android:drawable/dialog_holo_light_frame"
+        android:weightSum="10"
+        android:padding="30dp">
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textSize="30sp"
-             android:id="@+id/germanWord"
+            android:layout_height="0dp"
+            android:textSize="50sp"
+            android:gravity="center"
+            android:id="@+id/germanWord"
+            android:text="aa"
+            android:layout_weight="9" />
 
-            android:text="aa"/>
-    </RelativeLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/flip_icon_front"
+            android:src="@drawable/ic_flip_teaser"
+             android:padding="20dp"
+            android:layout_margin="10dp"
+            android:layout_gravity="end" />
 
-    <RelativeLayout
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/main_activity_card_back"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-         android:clickable="true"
-        android:visibility="gone" >
+        android:orientation="vertical"
+        android:padding="30dp"
+
+
+        android:background="@android:drawable/dialog_holo_light_frame"
+        android:weightSum="10">
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textSize="30sp"
+            android:layout_height="0dp"
+            android:textSize="50sp"
+            android:gravity="center"
             android:id="@+id/englishWord"
+            android:text="aa"
+            android:layout_weight="9" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/flip_icon_back"
+            android:src="@drawable/ic_flip_teaser"
+            android:padding="20dp"
+             android:layout_margin="10dp"
+            android:layout_gravity="end" />
 
-            android:text="aa"/>
-
-    </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>

@@ -39,8 +39,6 @@ public class FlashCard  {
         this.exampleWord = exampleWord;
     }
 
-
-
     public int getWordId() {
         return wordId;
     }
