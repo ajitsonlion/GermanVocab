@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +26,6 @@ public class CardAdapter extends ArrayAdapter<FlashCard> {
     private final Context context;
     private  ArrayList<FlashCard> dictionary;
 
-    private static View  container;
-
 
     public CardAdapter(Activity context, ArrayList<FlashCard> dictionary) {
         super(context, R.layout.cardslayout);
@@ -43,55 +40,31 @@ public class CardAdapter extends ArrayAdapter<FlashCard> {
         return dictionary.size();
     }
 
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View rowView = inflater.inflate(R.layout.cardslayout, parent, false);
-
-        final View cardFace =  rowView.findViewById(R.id.main_activity_card_face);
-        final View cardBack =   rowView.findViewById(R.id.main_activity_card_back);
-
-        cardBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                flipCard(rowView,cardFace,cardBack);
-            }
-        });
-
-        cardFace.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                flipCard(rowView, cardFace,cardBack);
-            }
-        });
+        View rowView = inflater.inflate(R.layout.activity_main, parent, false);
 
 
         TextView germanWord = (TextView) rowView.findViewById(R.id.germanWord);
-        TextView englishWord = (TextView) rowView.findViewById(R.id.englishWord);
+     //   TextView englishWord = (TextView) rowView.findViewById(R.id.englishWord);
 
 
         FlashCard flashCard=dictionary.get(position);
 
         germanWord.setText(flashCard.getGermanWord());
-        englishWord.setText(flashCard.getEnglishWord());
+      //  englishWord.setText(flashCard.getEnglishWord());
 
 
         return rowView;
     }
 
-    public    void flipCard(View view,View cardFace, View cardBack)
-    {
-
-
-        FlipAnimation flipAnimation = new FlipAnimation(cardFace, cardBack);
-
-        if (cardFace.getVisibility() == View.GONE)
-        {
-            flipAnimation.reverse();
-        }
-        view.startAnimation(flipAnimation);
-    }
 
 }

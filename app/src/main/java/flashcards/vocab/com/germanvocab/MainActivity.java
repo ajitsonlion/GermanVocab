@@ -7,12 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
 
-
+import flashcards.vocab.com.germanvocab.aphidmobile.flip.FlipViewController;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -24,14 +20,23 @@ import java.util.ArrayList;
 import flashcards.vocab.com.germanvocab.cardUI.CardAdapter;
 import flashcards.vocab.com.germanvocab.parser.FlashCard;
 import hugo.weaving.DebugLog;
+import it.gmariotti.cardslib.library.internal.Card;
 
-public class MainActivity extends Activity {
+
+public class MainActivity extends Activity  {
 
 
-    ListView flipView;
-     ProgressDialog mProgressDialog;
+    ArrayList<Card> dictionary;
+    ProgressDialog mProgressDialog;
     ArrayList<FlashCard> wordsDatabase;
-     @Override
+    CardAdapter cardAdapter;
+    FlipViewController flipView;
+    public static final  String DOMAIN_NAME ="http://ajitsonlion.comule.com/germanvocab/";
+
+    public static final  String DICTIONARY_URL ="http://ajitsonlion.comule.com/germanvocab/dictionary.json";
+
+
+    @Override
     @DebugLog
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,20 +45,12 @@ public class MainActivity extends Activity {
         new GetWordsInBackground().execute();
 
 
-       flipView = (ListView) findViewById(R.id.flip_view);
 
-        flipView .setOnItemClickListener(new  AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position,
-                                    long id) {
-
-                Toast.makeText(getBaseContext(), position, Toast.LENGTH_LONG).show();
-
-            }
-        });
+         flipView = new FlipViewController(this, FlipViewController.HORIZONTAL);
 
 
     }
+
 
 
     @Override
@@ -77,7 +74,6 @@ public class MainActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
-
 
 
 
@@ -128,9 +124,11 @@ public class MainActivity extends Activity {
             CardAdapter dictionary=new CardAdapter(MainActivity.this,wordsDatabase);
 
               flipView.setAdapter(dictionary);
+                setContentView(flipView);
 
 
-                mProgressDialog.dismiss();
+
+            mProgressDialog.dismiss();
 
 
         }
