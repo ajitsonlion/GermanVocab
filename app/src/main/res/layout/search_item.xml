@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:textAlignment="gravity"
+    android:layout_margin="5dp"
+    android:background="@android:drawable/dialog_holo_dark_frame"
+    android:weightSum="2">
+ 
+    <TextView
+        android:id="@+id/search_item_venue_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="aaaa"
+
+
+        android:textSize="20sp"
+        android:layout_weight="1"
+        android:padding="5dp" />
+ 
+    <TextView
+        android:id="@+id/search_item_venue_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="aa"
+
+        android:textSize="20sp"
+        android:layout_weight="1"
+        android:padding="5dp" />
+ 
+ 
+</LinearLayout>

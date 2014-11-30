@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,9 +17,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import flashcards.vocab.com.germanvocab.ListeningHearing.SpeakWord;
-import flashcards.vocab.com.germanvocab.MainActivity;
-import flashcards.vocab.com.germanvocab.R;
+ import flashcards.vocab.com.germanvocab.ListeningHearing.SpeakWord;
+ import flashcards.vocab.com.germanvocab.R;
 import flashcards.vocab.com.germanvocab.parser.FlashCard;
 
 
@@ -70,6 +70,13 @@ public class CardAdapter extends ArrayAdapter<FlashCard> {
         ImageView flipIconFront=(ImageView)rowView.findViewById(R.id.flip_icon_front);
         ImageView flipIconBack=(ImageView)rowView.findViewById(R.id.flip_icon_back);
 
+        ImageView iconSpeak=(ImageView)rowView.findViewById(R.id.icon_speak);
+        final FlashCard flashCard=dictionary.get(position);
+        String germanWord=flashCard.getGermanWord();
+
+        germanWordTextView.setText(germanWord);
+        englishWordTextView.setText(flashCard.getEnglishWord());
+
         flipIconFront.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,15 +91,14 @@ public class CardAdapter extends ArrayAdapter<FlashCard> {
             }
         });
 
+        iconSpeak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                speakWord.tts.speak(flashCard.getGermanWord(), TextToSpeech.QUEUE_FLUSH, null);
+            }
+        });
 
-        FlashCard flashCard=dictionary.get(position);
 
-        String germanWord=flashCard.getGermanWord();
-
-        germanWordTextView.setText(germanWord);
-        englishWordTextView.setText(flashCard.getEnglishWord());
-
-        speakWord.tts.speak(germanWord, TextToSpeech.QUEUE_FLUSH, null);
 
         Animation animation = AnimationUtils.loadAnimation(getContext(), (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
         rowView.startAnimation(animation);

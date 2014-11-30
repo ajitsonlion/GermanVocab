@@ -1,8 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<flashcards.vocab.com.germanvocab.cardUI.SingleScrollListView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/flip_view"
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white" >
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:weightSum="10">
 
-</flashcards.vocab.com.germanvocab.cardUI.SingleScrollListView>
+
+    <TableLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:stretchColumns="*"
+        android:layout_weight="4"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp">
+
+        <TableRow>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <ImageView
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                     android:src="@drawable/badge_1"
+                    android:padding="2dip"
+ />
+
+            </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ProgressBar
+                android:id="@+id/progress"
+                style="@style/ProgressBarStyle"
+                android:layout_width="match_parent"
+                android:progress="50"
+                android:layout_height="match_parent"
+                 />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="800"
+                    android:layout_centerVertical="true" />
+
+            </RelativeLayout>
+        </FrameLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+        <TextView
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="2dip"
+            android:textSize="20dp"
+            android:text="Words"/>
+        <TextView
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="2dip"
+            android:text="News Feed"/>
+    </LinearLayout>
+
+        </TableRow>
+
+        </TableLayout>
+
+    <flashcards.vocab.com.germanvocab.cardUI.SingleScrollListView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/flip_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+         android:scrollbars="none"
+
+        android:layout_weight="2"
+>
+
+    </flashcards.vocab.com.germanvocab.cardUI.SingleScrollListView>
+
+    <LinearLayout
+        android:layout_margin="20dp"
+         android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"></LinearLayout>
+
+</LinearLayout>

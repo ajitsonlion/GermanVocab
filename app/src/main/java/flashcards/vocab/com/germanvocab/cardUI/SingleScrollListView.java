@@ -14,8 +14,8 @@ public class SingleScrollListView extends ListView
 {
     private boolean mSingleScroll = false;
     private VelocityTracker mVelocity = null;
-    final private float mEscapeVelocity = 2000.0f;
-    final private int mMinDistanceMoved = 20;
+    final private float mEscapeVelocity = 4000.0f;
+    final private int mMinDistanceMoved = 60;
     private float mStartY = 0;
 
     public SingleScrollListView(Context context)

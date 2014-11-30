@@ -18,6 +18,18 @@ public class FlashCard  {
     private String article;
     private String letter;
 
+
+    public int getFreqInGerman() {
+        return freqInGerman;
+    }
+
+    public void setFreqInGerman(int freqInGerman) {
+        this.freqInGerman = freqInGerman;
+    }
+
+    private int freqInGerman;
+
+
     public ArrayList<String> getImagesForWord() {
         return imagesForWord;
     }
@@ -28,16 +40,17 @@ public class FlashCard  {
 
     private ArrayList<String> imagesForWord=new ArrayList<String>();
 
-    private ArrayList<WordToSentence> exampleWord=new ArrayList<WordToSentence>();
+    private ArrayList<WordToSentence> exampleSentence=new ArrayList<WordToSentence>();
 
 
-    public ArrayList<WordToSentence> getExampleWord() {
-        return exampleWord;
+    public ArrayList<WordToSentence> getExampleSentence() {
+        return exampleSentence;
     }
 
-    public void setExampleWord(ArrayList<WordToSentence> exampleWord) {
-        this.exampleWord = exampleWord;
+    public void setExampleSentence(ArrayList<WordToSentence> exampleSentence) {
+        this.exampleSentence = exampleSentence;
     }
+
 
     public int getWordId() {
         return wordId;
@@ -87,29 +100,33 @@ public class FlashCard  {
     }
 
 
+
 }
 
 
-class WordToSentence {
+class WordToSentence{
 
-    String germanWord="";
-
-    public String getEnglishWord() {
-        return englishWord;
+    public String getGermanSentence() {
+        return germanSentence;
     }
 
-    public void setEnglishWord(String englishWord) {
-        this.englishWord = englishWord;
+    public void setGermanSentence(String germanSentence) {
+        this.germanSentence = germanSentence;
     }
 
-    public String getGermanWord() {
-        return germanWord;
+    public String getEnglishSentence() {
+        return englishSentence;
     }
 
-    public void setGermanWord(String germanWord) {
-        this.germanWord = germanWord;
+    public void setEnglishSentence(String englishSentence) {
+        this.englishSentence = englishSentence;
     }
 
-    String englishWord="";
+    private String germanSentence="";
+
+    private String englishSentence="";
+
+
+
 
 }
